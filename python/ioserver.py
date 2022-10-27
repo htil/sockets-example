@@ -3,17 +3,19 @@ from flask_socketio import SocketIO
 from flask_cors import CORS
 from threading import Thread
 
+
 class IOServer():
 
     def __init__(self):
         self.app = Flask(__name__)
-        self.sio = SocketIO(self.app, cors_allowed_origins="*", async_mode='threading')
-    
+        self.sio = SocketIO(
+            self.app, cors_allowed_origins="*", async_mode='threading')
+
     def run(self):
         self.sio.run(self.app)
 
     def runDaemon(self):
-        self.thread = Thread(target = self.run)
+        self.thread = Thread(target=self.run)
         self.thread.daemon = True
         self.thread.start()
 
@@ -23,8 +25,7 @@ class IOServer():
     def send(self, msg, data):
         print("EMIT")
         print(data)
-        self.sio.emit(msg, {'data': data })
-
+        self.sio.emit(msg, {'data': data})
 
 
 '''
